@@ -45,7 +45,7 @@ function App() {
             <h3>Please edit your context (json) for studio arguments</h3>
             <div ref={wrapperRef} style={{ width: '100%', height: 460 }} />
             <div style={{ textAlign: 'center' }}>
-                <button onClick={handleOnClick} style={{ background: '#3e048b', color: '#fff', fontSize: 16, padding: '12px 10px', cursor: 'pointer' }}>Trigger sendContext</button>
+                <button onClick={handleOnClick} style={{ background: '#3e048b', color: '#fff', fontSize: 16, padding: '12px 10px', cursor: 'pointer' }}>Click here send your context to TalkDeskWebChat</button>
             </div>
         </div>
     )
