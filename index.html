@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>whitzard-chat</title>
+    <!-- Start of Talkdesk Code -->
+</head>
+<body>
+<script>      var webchat;
+((window, document, node, props, configs) => {
+  if (window.TalkdeskChatSDK) {
+    console.error("TalkdeskChatSDK already included");
+    return;
+  }
+  var divContainer = document.createElement("div");
+  divContainer.id = node;
+  document.body.appendChild(divContainer);
+  var currentDate = new Date().getTime();
+  var src = `https://talkdeskchatsdk.svc.talkdeskstg.com/talkdeskchatsdk.js?t=` + currentDate;
+  var script = document.createElement("script");
+  var firstScriptTag = document.getElementsByTagName("script")[0];
+  script.type = "text/javascript";
+  script.charset = "UTF-8";
+  script.id = "tdwebchatscript";
+  script.src = src;
+  script.async = true;
+  firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
+  script.onload = () => {
+    webchat = TalkdeskChatSDK(node, props);
+    webchat.init(configs);
+  };
+})(window, document, "tdWebchat", {
+  flowId: "5d0483bf01c647158e1d350a2dfb532c",
+  accountId: "",
+  region: "td-us-1"
+}, {enableEmoji: true, enableUserInput: true});    </script><!-- End of Talkdesk Code -->
+<div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
+</body>
+</html>
