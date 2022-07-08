@@ -52,7 +52,7 @@ function App() {
         <div className="App">
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <h3>Please edit your context (json) for studio arguments</h3>
-                <button onClick={clearSession} style={{ background: '#3e048b', color: '#fff', fontSize: 16, padding: '12px 10px', cursor: 'pointer' }}>Clear current page session</button>
+                <button onClick={clearSession} style={{ background: '#3e048b', color: '#fff', fontSize: 16, padding: '12px 10px', cursor: 'pointer' }}>Clear current session</button>
             </div>
             <div ref={wrapperRef} style={{ width: '100%', height: 460 }} />
             <div style={{ textAlign: 'center' }}>
