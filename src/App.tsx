@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import React, {useRef, useEffect} from 'react'
 import * as monaco from 'monaco-editor'
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
             minimap: {
                 enabled: false
             },
-            readOnly,
+            readOnly
         })
     }
 
@@ -29,10 +29,18 @@ function App() {
         }
     }
 
+    const clearSession = () => {
+        localStorage.clear()
+        sessionStorage.clear()
+        alert('Clear session success')
+        window.location.reload()
+    }
+
     useEffect(() => {
         if (wrapperRef.current) {
             // @ts-ignore
             wrapperEditorRef.current = renderEditor(wrapperRef.current)
+            wrapperEditorRef.current.focus()
         }
         return () => {
             wrapperEditorRef.current?.dispose()
@@ -42,7 +50,10 @@ function App() {
 
     return (
         <div className="App">
-            <h3>Please edit your context (json) for studio arguments</h3>
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <h3>Please edit your context (json) for studio arguments</h3>
+                <button onClick={clearSession} style={{ background: '#3e048b', color: '#fff', fontSize: 16, padding: '12px 10px', cursor: 'pointer' }}>Clear current page session</button>
+            </div>
             <div ref={wrapperRef} style={{ width: '100%', height: 460 }} />
             <div style={{ textAlign: 'center' }}>
                 <button onClick={handleOnClick} style={{ background: '#3e048b', color: '#fff', fontSize: 16, padding: '12px 10px', cursor: 'pointer' }}>Click here send your context to TalkDeskWebChat</button>
