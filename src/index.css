@@ -1,9 +1,119 @@
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
-html,body, #root{
-    width: 100%;
-    height: 100%;
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
+
+.App {
+  padding: 12px;
+}
+
+.c-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c-title {
+  font-size: 22px;
+}
+
+.c-description {
+  color: gray;
+}
+
+.c-button {
+  background: #3e048b;
+  color: #fff;
+  font-size: 16px;
+  padding: 12px;
+  cursor: pointer;
+  margin-left: 12px;
+  border-radius: 4px;
+  border: 1px solid #3e048b;
+}
+
+.c-split-wrapper {
+  width: 100%;
+  height: 460px;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+}
+
+.c-split-left {
+  width: 70%;
+}
+
+.c-split-right {
+  width: 30%;
+}
+
+.c-editor-wrapper {
+  width: 100%;
+  height: 100%;
+  padding-top: 12px;
+}
+
+.c-form-item {
+  padding-top: 12px;
+  display: flex;
+}
+
+.c-form-item-ipt {
+  display: inline-block;
+}
+
+.c-form-item-actions {
+  line-height: 40px;
+}
+
+.c-form-item input {
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  margin-right: 12px;
+  padding-left: 8px;
+  border: 1px solid gray;
+  border-radius: 4px;
+  outline: none;
+}
+
+.c-form-item input:hover,
+.c-form-item input:focus,
+.c-form-item input:focus-visible {
+  border-color: #3e048b;
+}
+
+.c-form-item i {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 14px;
+  text-align: center;
+  font-style: normal;
+  cursor: pointer;
+  margin: 0 8px;
+  color: gray;
+  border: 1px solid gray;
+  border-radius: 50%;
+}
+
+.c-form-item i:hover {
+  color: #3e048b;
+  border-color: #3e048b;
+}
+
+.c-form-item-ipt.error input {
+  border-color: red;
+}
+
+.c-form-item-ipt.error p {
+  color: red;
+  font-size: 12px;
 }
