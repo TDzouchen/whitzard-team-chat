@@ -8,8 +8,14 @@ interface FormItem {
   valueErr?: string;
 }
 
+const initialFormItems: FormItem[] = [
+  { key: 'field_custom1', value: 'hello world1' },
+  { key: 'field_custom2', value: 'hello world2' },
+  { key: 'field_custom3', value: 'hello world3' },
+]
+
 function App() {
-  const [formItems, setFormItems] = useState<FormItem[]>([{ key: '', value: '' }]);
+  const [formItems, setFormItems] = useState<FormItem[]>(initialFormItems);
 
   const wrapperEditorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -121,6 +127,7 @@ function App() {
       // @ts-ignore
       wrapperEditorRef.current = renderEditor(wrapperRef.current)
       wrapperEditorRef.current.focus()
+      handleOnView(formItems)
     }
     return () => {
       wrapperEditorRef.current?.dispose()
