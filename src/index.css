@@ -36,6 +36,11 @@ html, body, #root {
   border-radius: 4px;
   border: 1px solid #3e048b;
 }
+.c-button:active,
+.c-button:hover{
+  background: #3e048b90;
+  border: 1px solid #3e048b90;
+}
 
 .c-split-wrapper {
   width: 100%;
