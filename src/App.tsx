@@ -29,19 +29,19 @@ function App() {
     })
   }
 
-  const handleOnView = () => {
+  const handleOnView = (payload: FormItem[] = []) => {
     if (!wrapperEditorRef.current || !formItems.length || formItems.some(item => item.keyErr || item.valueErr)) {
       return
     }
 
-    const obj = formItems.reduce((obj, item) => {
+    const obj = payload.reduce((obj, item) => {
       if (item.key) {
         obj[item.key] = item.value
       }
       return obj
     }, {} as Record<string, any>)
 
-    setCodeValue(JSON.stringify(obj))
+    setCodeValue(JSON.stringify(obj, null, 2))
   }
 
   const handleOnApply = () => {
@@ -72,6 +72,8 @@ function App() {
 
       _prev.splice(index, 1)
 
+      handleOnView(_prev)
+
       return _prev
     })
   }
@@ -89,10 +91,10 @@ function App() {
         key: value
       }
 
+      handleOnView(_prev)
+
       return _prev
     })
-
-    handleOnView()
   }
 
   const onValueChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,10 +110,10 @@ function App() {
         value
       }
 
+      handleOnView(_prev)
+
       return _prev
     })
-
-    handleOnView()
   }
 
   useEffect(() => {
@@ -134,7 +136,7 @@ function App() {
           <p className="c-description">The context you configured will be set into the studio arguments as Json data structure.</p>
         </div>
         <div>
-          <button onClick={handleOnView} className="c-button">View Context</button>
+          <button onClick={() => handleOnView(formItems)} className="c-button">View Context</button>
           <button onClick={handleOnApply} className="c-button">Apply Context</button>
           <button onClick={clearSession} className="c-button">Clear session</button>
         </div>
