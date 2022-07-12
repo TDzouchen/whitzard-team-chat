@@ -11,7 +11,7 @@ interface FormItem {
 const initialFormItems: FormItem[] = [
   { key: 'field_custom1', value: 'hello world1' },
   { key: 'field_custom2', value: 'hello world2' },
-  { key: 'field_custom3', value: 'hello world3' },
+  { key: 'field_custom3', value: 'hello world3' }
 ]
 
 function App() {
@@ -36,12 +36,12 @@ function App() {
     })
   }
 
-  const handleOnView = (payload: FormItem[] = []) => {
+  const handleOnView = (formItems: FormItem[] = []) => {
     if (!wrapperEditorRef.current || !formItems.length || formItems.some(item => item.keyErr || item.valueErr)) {
       return
     }
 
-    const obj = payload.reduce((obj, item) => {
+    const obj = formItems.reduce((obj, item) => {
       if (item.key) {
         obj[item.key] = item.value
       }
@@ -138,7 +138,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="c-header space-between">
+      <div className="c-header">
         <div>
           <p className="c-title">{getParams('title') || '3rd party website simulation'}</p>
           <p className="c-description">{getParams('desc') || 'The context you configured will be set into the studio arguments as json data structure.'}</p>
@@ -149,7 +149,7 @@ function App() {
           <button onClick={clearSession} className="c-button">{getParams('clear_btn') || 'Clear session'}</button>
         </div>
       </div>
-      <div className="c-split-wrapper space-between">
+      <div className="c-split-wrapper">
         <div className="c-split-left">
           {
             formItems.map((item, index, arr) => {
