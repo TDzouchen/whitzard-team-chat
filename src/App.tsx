@@ -20,7 +20,7 @@ function App() {
   const wrapperEditorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   // @ts-ignore
-  const getParams = (key: string) => window.getQueryVariable(key)
+  const getParams = (key: string) => window.getQueryVariable(key) || ''
   const setCodeValue = (code: string) => wrapperEditorRef.current?.setValue(code) || ''
   const getCodeValue = () => wrapperEditorRef.current?.getValue() || ''
 
