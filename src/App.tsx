@@ -19,7 +19,8 @@ function App() {
 
   const wrapperEditorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
-
+  // @ts-ignore
+  const getParams = (key: string) => window.getQueryVariable(key)
   const setCodeValue = (code: string) => wrapperEditorRef.current?.setValue(code) || ''
   const getCodeValue = () => wrapperEditorRef.current?.getValue() || ''
 
@@ -85,8 +86,8 @@ function App() {
   }
 
   const onKeyChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim()
-    const keyErr = !/^[a-zA-Z_]([a-zA-Z0-9]+)?$/g.test(value) ? 'Key should be a valid variable' : ''
+    const value = e.target.value
+    const keyErr = !/^([^\x00-\xff]|[a-zA-Z_$])([^\x00-\xff]|[a-zA-Z0-9_$])*$/.test(value) ? 'Key should be a valid variable' : ''
 
     setFormItems(prev => {
       const _prev = [...prev]
@@ -104,7 +105,7 @@ function App() {
   }
 
   const onValueChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim();
+    const value = e.target.value;
     const valueErr = /({|}|\[|\]|undefined|null)/g.test(value) ? 'Value should be string or number' : '';
 
     setFormItems(prev => {
@@ -113,7 +114,7 @@ function App() {
       _prev[index] = {
         ..._prev[index],
         valueErr,
-        value
+        value: value
       }
 
       handleOnView(_prev)
@@ -139,13 +140,13 @@ function App() {
     <div className="App">
       <div className="c-header space-between">
         <div>
-          <p className="c-title">Studio Context Editor</p>
-          <p className="c-description">The context you configured will be set into the studio arguments as Json data structure.</p>
+          <p className="c-title">{getParams('title') || '3rd party website simulation'}</p>
+          <p className="c-description">{getParams('desc') || 'The context you configured will be set into the studio arguments as json data structure.'}</p>
         </div>
         <div>
-          <button onClick={() => handleOnView(formItems)} className="c-button">View Context</button>
-          <button onClick={handleOnApply} className="c-button">Apply Context</button>
-          <button onClick={clearSession} className="c-button">Clear session</button>
+          <button onClick={() => handleOnView(formItems)} className="c-button">{getParams('view_btn') || 'View Context'}</button>
+          <button onClick={handleOnApply} className="c-button">{getParams('call_btn') || 'Apply Context'}</button>
+          <button onClick={clearSession} className="c-button">{getParams('clear_btn') || 'Clear session'}</button>
         </div>
       </div>
       <div className="c-split-wrapper space-between">
