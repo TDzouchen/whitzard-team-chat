@@ -56,9 +56,9 @@ function App() {
     // @ts-ignore
     const sdk = window.webchat as Record<string, any>
     try {
-      sdk.setContext(JSON.parse(code))
+      sdk.setContextParam(JSON.parse(code))
     } catch (e) {
-      sdk.setContext(code)
+      sdk.setContextParam(code)
     }
   }
 
