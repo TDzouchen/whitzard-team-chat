@@ -54,11 +54,11 @@ function App() {
   const handleOnApply = () => {
     const code = getCodeValue()
     // @ts-ignore
-    const sdk = window.webchat as Record<string, any>
+    const webchat = window.webchat as Record<string, any>
     try {
-      sdk.setContextParam(JSON.parse(code))
+      webchat.setContextParam(JSON.parse(code))
     } catch (e) {
-      sdk.setContextParam(code)
+      webchat.setContextParam(code)
     }
   }
 
@@ -129,6 +129,10 @@ function App() {
       wrapperEditorRef.current = renderEditor(wrapperRef.current)
       wrapperEditorRef.current.focus()
       handleOnView(formItems)
+      document.getElementById('tdwebchatscript')?.addEventListener('load', () => {
+        // @ts-ignore
+        (window.webchat as Record<string, any>).onConversationStart = () => handleOnApply()
+      })
     }
     return () => {
       wrapperEditorRef.current?.dispose()
