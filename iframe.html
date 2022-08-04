@@ -1,51 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>self["MonacoEnvironment"] = (function (paths) {
-          return {
-            globalAPI: false,
-            getWorkerUrl : function (moduleId, label) {
-              var result =  paths[label];
-              if (/^((http:)|(https:)|(file:)|(\/\/))/.test(result)) {
-                var currentUrl = String(window.location);
-                var currentOrigin = currentUrl.substr(0, currentUrl.length - window.location.hash.length - window.location.search.length - window.location.pathname.length);
-                if (result.substring(0, currentOrigin.length) !== currentOrigin) {
-                  var js = '/*' + label + '*/importScripts("' + result + '");';
-                  var blob = new Blob([js], { type: 'application/javascript' });
-                  return URL.createObjectURL(blob);
-                }
-              }
-              return result;
-            }
-          };
-        })({
-  "editorWorkerService": "././monaco/editor.worker.bundle.js",
-  "css": "././monaco/css.worker.bundle.js",
-  "html": "././monaco/html.worker.bundle.js",
-  "json": "././monaco/json.worker.bundle.js",
-  "typescript": "././monaco/ts.worker.bundle.js",
-  "javascript": "././monaco/ts.worker.bundle.js",
-  "less": "././monaco/css.worker.bundle.js",
-  "scss": "././monaco/css.worker.bundle.js",
-  "handlebars": "././monaco/html.worker.bundle.js",
-  "razor": "././monaco/html.worker.bundle.js"
-});</script>
-
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>whitzard-chat</title>
+    <title>whitzard-chat-iframe</title>
     <!-- Start of Talkdesk Code -->
-  <script type="module" crossorigin src="./assets/index.5dd2b114.js"></script>
-  <link rel="stylesheet" href="./assets/index.d4ddc667.css">
 </head>
 <body>
 <script>
-    /* To test for environment variable conflicts */
-    // window.process = {
-    //     env: {},
-    //     versions: { node: "dummy-node-version" },
-    // }
-    
     function getQueryVariable(variable) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");
@@ -84,13 +46,23 @@
   script.onload = () => {
     webchat = TalkdeskChatSDK(node, props);
     webchat.init(configs);
+    webchat.onOpen = function() {
+      var chatIframeElement = window.parent.document.getElementById('chat-iframe');
+      if (chatIframeElement) {
+        chatIframeElement.className = 'chat-iframe chat-iframe-open'
+      }
+    };
+    webchat.onClose = function() {
+      var chatIframeElement = window.parent.document.getElementById('chat-iframe');
+      if (chatIframeElement) {
+        chatIframeElement.className = 'chat-iframe chat-iframe-close'
+      }
+    }  
   };
 })(window, document, "tdWebchat", {
   flowId: flowId,
   accountId: "",
   region: "td-us-1"
 }, {enableEmoji: true, enableUserInput: true});    </script><!-- End of Talkdesk Code -->
-<div id="root"></div>
-
 </body>
 </html>

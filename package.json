@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && cp config.html ./dist",
+    "build": "tsc && vite build && cp config.html ./dist && cp inside-iframe-target.html ./dist && cp iframe.html ./dist",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -131,7 +131,15 @@ function App() {
       handleOnView(formItems)
       document.getElementById('tdwebchatscript')?.addEventListener('load', () => {
         // @ts-ignore
-        (window.webchat as Record<string, any>).onConversationStart = () => handleOnApply()
+        (window.webchat as Record<string, any>).onConversationStart = () =>{
+          console.log('onConversationStartChatWebSite context ===>', getCodeValue())
+          handleOnApply()
+        }
+        // @ts-ignore
+        (window.webchat as Record<string, any>).onOpen = () => {
+          console.log('onOpenChatWebSite context ===>', getCodeValue())
+          handleOnApply()
+        }
       })
     }
     return () => {
