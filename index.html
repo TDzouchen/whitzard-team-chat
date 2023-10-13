@@ -51,7 +51,12 @@
   firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
   script.onload = () => {
     webchat = TalkdeskChatSDK(node, props);
-    webchat.init(configs);
+    webchat.init(configs).then(function () {
+        // var target = document.getElementById('tdWebchat').shadowRoot
+        // var style = document.createElement('style');
+        // var css = style.textContent = [".custom-bot { white-space: nowrap };", ".custom-user { white-space: nowrap };"].join("\n");
+        // target.appendChild(style);
+    });
   };
 })(window, document, "tdWebchat", {
   flowId: flowId,
