@@ -62,7 +62,12 @@
   flowId: flowId,
   accountId: "",
   region: "td-us-1"
-}, {enableEmoji: true, enableUserInput: true});    </script><!-- End of Talkdesk Code -->
+}, {
+    enableEmoji: true, enableUserInput: true,
+    styles: {
+        chatAriaLabel: "What you want to"
+    }
+});    </script><!-- End of Talkdesk Code -->
 <div id="root"></div>
 <script type="module" src="/src/main.tsx"></script>
 </body>
