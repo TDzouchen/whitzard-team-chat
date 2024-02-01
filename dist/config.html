@@ -37,6 +37,17 @@
                 <input class="clear-radio" id="no" type="radio" value="0" name="clear" checked />
             </div>
         </div>
+        <div style="display: flex; flex-direction: row;padding-top: 12px">
+            <label style="width: 160px">
+                Iframe Type
+            </label>
+            <div>
+                <select id="iframe-type">
+                    <option value="">No iframe</option>
+                    <option value="inside-iframe-target.html">Iframe V1</option>
+                </select>
+            </div>
+        </div>
         <div style="text-align: right;width: 370px; padding-top: 12px;">
             <button id="submit" style="width: 100%;">Submit</button>
         </div>
@@ -47,6 +58,7 @@
         var env = document.getElementById('env').value
         var flow_id = document.getElementById('flow_id').value
         var radios = document.getElementsByClassName('clear-radio')
+        var iframeType = document.getElementById('iframe-type')
         var clear = true
         if (!flow_id) {
             alert('Please edit your Chat Touchpoint ID!')
@@ -63,6 +75,9 @@
             localStorage.clear()
         }
         var url = "index.html?env=" + env + "&flow_id=" + flow_id
+        if (iframeType.value) {
+            url = iframeType.value + "?env=" + env + "&flow_id=" + flow_id
+        }
         window.location.replace(url)
     }
 </script>

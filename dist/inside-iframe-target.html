@@ -42,6 +42,8 @@
     </style>
 </head>
 <body>
+<h1>Iframe V1 version</h1>
+<button id="reset">reset sessiong</button>
 <script>
     function getQueryVariable(variable) {
         var query = window.location.search.substring(1);
@@ -62,6 +64,12 @@
     iframe.className = "chat-iframe chat-iframe-close"
 
     document.body.appendChild(iframe)
+
+    document.getElementById('reset').onclick = function () {
+        sessionStorage.clear()
+        localStorage.clear()
+        window.location.reload()
+    }
 </script>
 </body>
 </html>

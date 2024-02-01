@@ -1,0 +1,132 @@
+<!doctype html><html lang="en-US"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Webchat</title><script defer="defer" src="talkdeskchatsdk.js"></script></head><body><h1>Livechat Demo</h1><div id="tdWebchat"></div><script>var webChat;
+
+      document.addEventListener('DOMContentLoaded', function (event) {
+        webChat = TalkdeskChatSDK('tdWebchat', {
+          // flowId: '2d0dad6f92ca4ac9beeca2f3105dfb74',
+          flowId: 'f7c77444b58b4129b598fc2e3a803183',
+          // flowId: 'a3cfca95cd3a44bf969aad6bef36fe80',
+          // touchpointId: '',
+          accountId: '',
+          region: 'td-us-1',
+          shadowDOM: true,
+        });
+
+        webChat.init({
+          enableEmojiPicker: true,
+          enableUserInput: true,
+          enableValidation: false,
+          welcomeMessages: [{
+            "media_type": "quickreplies",
+            "text_response": "Ask me a question to get started, or select an option below.",
+            "quick_actions": {
+              "elements": [
+                {
+                  "type": "payload",
+                  "payload": "1_Account_Support",
+                  "country_code": "us",
+                  "phone_number": "",
+                  "display_text": "Account Support",
+                  "target": "_blank"
+                },
+                {
+                  "phone_number": "",
+                  "payload": "2_Card_Support",
+                  "country_code": "us",
+                  "type": "payload",
+                  "target": "_blank",
+                  "display_text": "Card Support"
+                },
+                {
+                  "phone_number": "",
+                  "type": "payload",
+                  "target": "_blank",
+                  "display_text": "Digital Support",
+                  "payload": "3_Digital_Support",
+                  "country_code": "us"
+                },
+                {
+                  "display_text": "Apply for a Loan",
+                  "target": "_blank",
+                  "country_code": "us",
+                  "phone_number": "",
+                  "type": "payload",
+                  "payload": "4_Apply_for_a_Loan"
+                },
+                {
+                  "phone_number": "",
+                  "country_code": "us",
+                  "target": "_blank",
+                  "payload": "5_Speak_with_a_Virtual_Banker",
+                  "display_text": "Speak with a Virtual Banker",
+                  "type": "payload"
+                },
+                {
+                  "payload": "6_Other",
+                  "phone_number": "",
+                  "country_code": "us",
+                  "display_text": "Other",
+                  "target": "_blank",
+                  "type": "payload"
+                }
+              ]
+            }
+          }],
+          styles: {
+            avatarBackgroundColor: '#edf4fc',
+            avatarForegroundColor: '#5c6784',
+            avatarBorderColor: '#edf4fc',
+            botAnchorTextColor: '#3232d6',
+            botAnchorTextColorVisited: '#5405bd',
+            botBackgroundColor: '#f2f4f5',
+            botIcon: '',
+            botTextColor: '#000000',
+            buttonBackgroundColor: '#edf4fc',
+            buttonHoverBackgroundColor: '#edf4fc',
+            buttonTextColor: '#005cde',
+            carouselTextColor: '#475059',
+            chatIcon:
+              'https://qa-cdn-talkdesk.talkdeskdev.com/cdn-assets/latest/talkdesk/product/app-icons/sms.svg',
+            chatPlaceholder: 'Type a message...',
+            chatThemeColor: '#1e0044',
+            chatHoverThemeColor: '#172241',
+            chatTitle: 'Talkdesk Chat',
+            chatTitleIcon:
+              'https://qa-cdn-talkdesk.talkdeskdev.com/cdn-assets/latest/talkdesk/product/app-icons/sms.svg',
+            replyBackgroundColor: 'transparent',
+            replyBorderColor: '#005cde',
+            replyHoverTextColor: '#edf4fc',
+            replyTextColor: '#005cde',
+            startChatButtonBackgroundColor: '#1e0044',
+            startChatButtonHoverBackgroundColor: '#1e0044',
+            startChatButtonTextColor: '#ffffff',
+            startChatButtonHoverTextColor: '#ffffff',
+            startChatButtonBorderColor: '#1e0044',
+            startChatButtonHoverBorderColor: '#1e0044',
+            startChatButtonLabel: "Start new chat! (CUSTOM)",
+            userAnchorTextColor: '#e1ccfe',
+            userAnchorTextColorVisited: '#b681fc',
+            userBackgroundColor: '#5405bd',
+            userTextColor: '#ffffff',
+            endedChatMessage: "This chat has ended! (CUSTOM)",
+            chatConfirmButtonBackgroundColor: '#3E048B',
+            chatConfirmButtonFontColor: '#ffffff',
+            chatConfirmButtonFontSize: '14px',
+            chatConfirmButtonFontFamily: 'Roboto-Regular, sans-serif',
+            chatCancelButtonFontColor: '#3E048B',
+            chatCancelButtonFontFamily: 'Roboto-Regular, sans-serif',
+            chatCancelButtonFontSize: '14px',
+            chatDialogBoxIconColor: '#AEB3B8',
+            chatDialogBoxEndChat: 'Are you sure you want to end this chat?',
+            chatDialogBoxFontFamily: 'Roboto-Regular, sans-serif',
+            chatDialogBoxFontSize: '16px',
+            chatDialogBoxFontColor: '#202830',
+            chatConfirmButtonEndChat: 'Yes, end chat',
+            chatCancelButtonEndChat: 'Cancel',
+            chatCloseButtonColor: '#ffffff',
+            chatMinimizeButtonColor: '#ffffff',
+            chatDialogBoxRetryEndChat: 'There was an error while ending the chat.',
+            chatConfirmButtonRetryEndChat: 'Try again',
+            chatCancelButtonRetryEndChat: 'Dismiss',
+          },
+        });
+      });</script></body></html>

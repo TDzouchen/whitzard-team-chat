@@ -83,13 +83,23 @@
   firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
   script.onload = () => {
     webchat = TalkdeskChatSDK(node, props);
-    webchat.init(configs);
+    webchat.init(configs).then(function () {
+        // var target = document.getElementById('tdWebchat').shadowRoot
+        // var style = document.createElement('style');
+        // var css = style.textContent = [".custom-bot { white-space: nowrap };", ".custom-user { white-space: nowrap };"].join("\n");
+        // target.appendChild(style);
+    });
   };
 })(window, document, "tdWebchat", {
   flowId: flowId,
   accountId: "",
   region: "td-us-1"
-}, {enableEmoji: true, enableUserInput: true});    </script><!-- End of Talkdesk Code -->
+}, {
+    enableEmoji: true, enableUserInput: true,
+    styles: {
+        chatAriaLabel: "What you want to"
+    }
+});    </script><!-- End of Talkdesk Code -->
 <div id="root"></div>
 
 </body>
