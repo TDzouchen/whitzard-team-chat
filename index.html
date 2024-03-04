@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>whitzard-chat</title>
+    <title>whitzard-chat-playground</title>
     <!-- Start of Talkdesk Code -->
 </head>
 <body>
@@ -51,12 +51,7 @@
   firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
   script.onload = () => {
     webchat = TalkdeskChatSDK(node, props);
-    webchat.init(configs).then(function () {
-        // var target = document.getElementById('tdWebchat').shadowRoot
-        // var style = document.createElement('style');
-        // var css = style.textContent = [".custom-bot { white-space: nowrap };", ".custom-user { white-space: nowrap };"].join("\n");
-        // target.appendChild(style);
-    });
+    webchat.init(configs);
   };
 })(window, document, "tdWebchat", {
   flowId: flowId,

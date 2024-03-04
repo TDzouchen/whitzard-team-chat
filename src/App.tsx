@@ -14,6 +14,16 @@ const initialFormItems: FormItem[] = [
   { key: 'field_custom3', value: 'hello world3' }
 ]
 
+const i18nList = [
+  { name: 'en-US', value: 'en-US' },
+  { name: 'pt-PT', value: 'pt-PT' },
+  { name: 'es-ES', value: 'es-ES' },
+  { name: 'de-DE', value: 'de-DE' },
+  { name: 'fr-FR', value: 'fr-FR' },
+  { name: 'it-IT', value: 'it-IT' },
+  { name: 'pt-BR', value: 'pt-BR' },
+];
+
 function App() {
   const [formItems, setFormItems] = useState<FormItem[]>(initialFormItems);
 
@@ -123,6 +133,17 @@ function App() {
     })
   }
 
+  const handleOnI18nChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const target = event.target?.value || ''
+    if (target) {
+      // @ts-ignore
+      const webchat = window.webchat as Record<string, any>
+      if (webchat) {
+        webchat.init({ languageCode: target });
+      }
+    }
+  };
+
   useEffect(() => {
     if (wrapperRef.current) {
       // @ts-ignore
@@ -199,6 +220,11 @@ function App() {
               )
             })
           }
+          <div style={{ padding: '4px 0' }}>
+            <select style={{ width: '100%' }} onChange={handleOnI18nChange}>
+              {i18nList.map(item => <option key={item.value} value={item.value}>{item.name}</option>)}
+            </select>
+          </div>
         </div>
         <div ref={wrapperRef} className="c-split-right c-editor-wrapper" />
       </div>
