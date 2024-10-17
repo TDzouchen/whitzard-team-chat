@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>whitzard-chat-iframe</title>
+    <!-- Start of Talkdesk Code -->
+</head>
+<body>
+<script>
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return decodeURIComponent(pair[1]);}
+        }
+        return(false);
+    }
+    var env = getQueryVariable('env') || "stg"
+    var flowId = getQueryVariable('flow_id') || '5d0483bf01c647158e1d350a2dfb532c'
+    var scriptHrefMapper = {
+        "stg": "https://talkdeskchatsdk.svc.talkdeskstg.com",
+        "qa": "https://talkdeskchatsdk.svc.talkdeskqa.com",
+        "prod": "https://talkdeskchatsdk.talkdeskapp.com"
+    }
+    var webchat;
+    ((window, document, node, props, configs) => {
+        if (window.TalkdeskChatSDK) {
+            console.error("TalkdeskChatSDK already included");
+            return;
+        }
+        var divContainer = document.createElement("div");
+        divContainer.id = node;
+        document.body.appendChild(divContainer);
+        var currentDate = new Date().getTime();
+        var src = scriptHrefMapper[env] + "/talkdeskchatsdk.js?t=" + currentDate;
+        var script = document.createElement("script");
+        var firstScriptTag = document.getElementsByTagName("script")[0];
+        script.type = "text/javascript";
+        script.charset = "UTF-8";
+        script.id = "tdwebchatscript";
+        script.src = src;
+        script.async = true;
+        firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
+        script.onload = () => {
+            webchat = TalkdeskChatSDK(node, props);
+            webchat.init(configs);
+            webchat.onOpen = function() {
+                window.parent.postMessage(JSON.stringify({ topic: '__TD_WEB_CHAT_', action: 'open' }), "*")
+            };
+            webchat.onClose = function() {
+                window.parent.postMessage(JSON.stringify({ topic: '__TD_WEB_CHAT_', action: 'close' }), "*")
+            }
+        };
+    })(window, document, "tdWebchat", {
+        flowId: flowId,
+        accountId: "",
+        region: "td-us-1"
+    }, {
+        enableEmoji: true,
+        enableUserInput: true,
+        styles: {
+            chatAriaLabel: "What you want to"
+        }
+    });    </script><!-- End of Talkdesk Code -->
+</body>
+</html>
