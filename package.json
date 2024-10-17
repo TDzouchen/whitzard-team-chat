@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && cp config.html ./dist && cp inside-iframe-target.html ./dist && cp iframe.html ./dist && cp iframe-message.html ./dist && cp inside-iframe-target-message.html ./dist && cp -r auto-connection-twilio-trigger-button ./dist",
+    "rename": "mv dist docs",
+    "build": "tsc && vite build && cp config.html ./dist && cp inside-iframe-target.html ./dist && cp iframe.html ./dist && cp iframe-message.html ./dist && cp inside-iframe-target-message.html ./dist && cp -r auto-connection-twilio-trigger-button ./dist && npm run rename",
     "preview": "vite preview"
   },
   "dependencies": {
