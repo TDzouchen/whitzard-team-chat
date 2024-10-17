@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="icon"
+      href="https://prd-cdn-talkdesk.talkdesk.com/cdn-assets/latest/talkdesk/brand/main_brand/favicon/favicon-32x32.png"
+      sizes="16x16"
+      type="image/png"
+    />
+    <title>Talkdesk Conversation Details</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="transfer-details.css" />
+    <script src="https://unpkg.com/dayjs@1.10.7/dayjs.min.js" integrity="sha384-9JzPji3H5JWTDH9YVzCzwcYfi/YKvzcn/nYbC1yEmDyrKOymEnU5jb3AFgaoLtSZ" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/dayjs@1.10.7/plugin/isToday.js" integrity="sha384-XD7wjUoeDBrCQtxNpdmSsQbz/2XDuyNmweQKb6embhjdtn52qvIxa2+S1Zfj3wwF" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/dayjs@1.10.7/plugin/isYesterday.js" integrity="sha384-GX7YckrCH6TpELanm4gvUKoTBPZ+stTTK/CsUX6DZisgdfA5e0HFaDUXfLj69Xag" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/dayjs@1.10.7/plugin/duration.js" integrity="sha384-6marTQl/qYrWD9iKaygD2LdA63fZlLLkAuypx5nhQYcNdNV9zXM1JxpgmxD0s5Ru" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <div class="page">
+      <header>
+        <img class="logo" src="./assets/talkdesk_logo.png" alt="Talkdesk" />
+      </header>
+      <div class="pageBody">
+        <div class="cardDetails">
+          <div class="cardHeader">
+            <div class="transferLogoWrapper">
+              <img src="./assets/transfer.svg" alt="transfer" />
+            </div>
+            <div>
+              <div class="title">Transfer details</div>
+              <span class="subTitle">from Virtual Agent</span>
+            </div>
+          </div>
+          <div class="cardTable">
+            <div>
+              <div class="cardTableHeader">Virtual agent</div>
+              <div id="va" class="cardTableBody virtualAgentName">
+                <div>N/A</div>
+              </div>
+            </div>
+            <div>
+              <div class="cardTableHeader">Channel</div>
+              <div id="ch" class="cardTableBody channelName">
+                <div>N/A</div>
+              </div>
+            </div>
+            <div>
+              <div class="cardTableHeader">Started</div>
+              <div id="sd" class="cardTableBody">
+                <div>N/A</div>
+              </div>
+            </div>
+            <div>
+              <div class="cardTableHeader">Duration</div>
+              <div id="du" class="cardTableBody">
+                <div>N/A</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cardData">
+          <div class="cardHeader">
+            <div class="title">Collected data</div>
+          </div>
+          <div id="transferedItems"></div>
+          <div id="noData">
+            <div class="noDataImageWrapper">
+              <img src="./assets/empty_state.svg" alt="empty" />
+            </div>
+            <div class="noDataTitle">No data to display</div>
+            <div class="noDataDescription">
+              No data was collected from the transferred interaction
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer class="">
+    <script>
+      // dayJs includes
+      dayjs.extend(window.dayjs_plugin_isToday);
+      dayjs.extend(window.dayjs_plugin_isYesterday);
+      dayjs.extend(window.dayjs_plugin_duration);
+
+      const reservedKeys = ['va', 'ch', 'sd', 'ld'];
+
+      const Format = {
+        SimpleDateTime: 'MMM D, YYYY, h:mm A',
+        SimpleTime: 'HH:mm:ss',
+        TimeWithoutHours: 'mm:ss',
+        TimeWithAmPm: 'h:mm A',
+      };
+
+      const channelIcons = {
+        sms: 'sms.svg',
+        voice: 'voice.svg',
+        webmessenger: 'web_messenger.svg',
+      };
+
+      function formatDate(date, dateFormat = Format.SimpleDateTime) {
+        return dayjs(date).format(dateFormat);
+      }
+
+      function formatDateHumanize(date) {
+        if (dayjs(date).isToday()) {
+          return formatDate(date, `[Today, ] ${Format.TimeWithAmPm}`);
+        }
+
+        if (dayjs(date).isYesterday()) {
+          return formatDate(date, `[Yesterday, ] ${Format.TimeWithAmPm}`);
+        }
+
+        return formatDate(date);
+      }
+
+      function getDuration(startDate, lastDate) {
+        const date1 = dayjs(startDate);
+        const date2 = dayjs(lastDate);
+
+        const duration = dayjs.duration(date2.diff(date1));
+
+        if (isNaN(duration.asHours()) || isNaN(duration.asMinutes())) {
+          return '-';
+        }
+
+        if (duration.asHours() < 1) {
+          return duration.format(Format.TimeWithoutHours);
+        }
+
+        if (duration.asHours() > 24) {
+          return '> 1 d';
+        }
+
+        return duration.format(Format.SimpleTime);
+      }
+
+      function isValidURL(string) {
+        const pattern = new RegExp(/(http(s)?:\/\/.)/, 'gi');
+
+        return !!pattern.test(string);
+      }
+
+      window.onload = () => {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
+        let noData = true;
+
+        Object.keys(params).forEach((key) => {
+          if (reservedKeys.some((rKey) => rKey === key)) {
+            if (key && (!!document.getElementById(key) || key === 'ld')) {
+              let value = params[key];
+              let title = params[key];
+              let elementId = key;
+
+              if (key === 'ch') {
+                value = `<img class="channelLogo" src="./assets/${
+                  channelIcons[params[key].replace(/\s/g, '').toLowerCase()]
+                }" /> ${params[key]}`;
+              }
+
+              if (key === 'sd') {
+                value = formatDateHumanize(new Date(params[key]));
+                title = value;
+              }
+
+              if (key === 'ld') {
+                const startDate = new Date(params['sd']);
+                const lastDate = new Date(params[key]);
+
+                value = getDuration(startDate, lastDate);
+                title = value;
+
+                elementId = 'du';
+              }
+
+              document.getElementById(elementId).innerHTML = `<div title="${title}">${value}</div>`;
+            }
+
+            return;
+          }
+
+          noData = false;
+
+          const paramValue = isValidURL(params[key])
+            ? `<a href="${params[key]}" target="_blank">${params[key]}</a>`
+            : params[key];
+
+          const node = document.createElement('div');
+          node.innerHTML = `
+        <div class="cardTableRow">
+          <div class="cardTableHeader">${key}</div>
+          <div class="cardTableBody">${paramValue}</div>
+        </div>`;
+
+          document.getElementById('transferedItems').appendChild(node);
+        });
+
+        if (noData) {
+          document.getElementById('noData').style.display = 'block';
+        }
+      };
+    </script>
+  </footer>
+</html>
